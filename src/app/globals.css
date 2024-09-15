@@ -31,3 +31,117 @@ body {
     text-wrap: balance;
   }
 }
+
+.timer-wrapper {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border: solid 2px white;
+  border-radius: 5px;
+  z-index: 2;
+  width: 100%;
+  max-width: 1000px; /* Máximo ancho para pantallas grandes */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.timer-inner {
+  color: #333;
+  display: flex;
+  border: solid 2px #fff;
+  padding: 2rem;
+  background-color: rgba(256, 256, 256, 0.8);
+  border-radius: 5px;
+  justify-content: center;
+  flex-wrap: nowrap; /* Asegura que los elementos no se envuelvan */
+  overflow: hidden;
+  width: 100%;
+}
+
+.timer-segment {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 1rem;
+  min-width: 80px;
+  flex-grow: 1;
+}
+
+.divider,
+.time {
+  font-size: 5vw; /* Usa vw para un tamaño de fuente que responda al tamaño de la pantalla */
+}
+
+.divider {
+  padding: 0 1rem;
+}
+
+.label {
+  font-size: 2vw; /* Usa vw para que se adapte al tamaño de la pantalla */
+}
+
+h1 {
+  z-index: 2;
+  font-size: 10vw;
+  color: #fff;
+  text-align: center;
+}
+
+video {
+  z-index: 1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+@media (min-width: 768px) {
+  .timer-segment {
+    margin: auto;
+    min-width: 20px;
+  }
+
+  .divider,
+  .time {
+    font-size: 7rem;
+  }
+
+  .label {
+    font-size: 2rem;
+  }
+
+  h1 {
+    font-size: 10rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .timer-segment {
+    margin: auto;
+    min-width: 10px;
+  }
+
+  .divider,
+  .time {
+    font-size: 10vw; /* Ajusta para que sea más grande en móviles */
+  }
+
+  .label {
+    font-size: 3vw;
+  }
+
+  h1 {
+    font-size: 15vw;
+  }
+
+  .timer-wrapper {
+    padding: 1rem;
+  }
+
+  .timer-inner {
+    padding: 1rem;
+  }
+}
