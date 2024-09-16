@@ -34,9 +34,6 @@ body {
 
 .timer-wrapper {
   background-color: rgba(0, 0, 0, 0.8);
-  padding: 2rem;
-  border: solid 2px white;
-  border-radius: 5px;
   z-index: 2;
   width: 100%;
   max-width: 1000px; /* Máximo ancho para pantallas grandes */
@@ -48,12 +45,10 @@ body {
 }
 
 .timer-inner {
-  color: #333;
+  color: #000000;
   display: flex;
-  border: solid 2px #fff;
-  padding: 2rem;
-  background-color: rgba(256, 256, 256, 0.8);
-  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 1rem;
   justify-content: center;
   flex-wrap: nowrap; /* Asegura que los elementos no se envuelvan */
   overflow: hidden;
@@ -138,10 +133,9 @@ video {
   }
 
   .timer-wrapper {
-    padding: 1rem;
   }
 
   .timer-inner {
-    padding: 1rem;
+    /* padding: 1rem; */
   }
 }

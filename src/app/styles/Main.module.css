@@ -1,0 +1,10 @@
+.container{
+    /* padding: 1rem */
+}
+
+.border{
+    /* border gold */
+    border: 1px solid #f1c40f;
+    padding: 1rem;
+    margin: 1rem;
+}
