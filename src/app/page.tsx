@@ -9,6 +9,16 @@ import { Clock } from "@/components";
 export default function Home() {
   const data = json_wedding_data;
   console.log(data);
+
+  // sumar el total de invitados
+
+  let totalInvitados = 0;
+  data.guests.forEach((guest) => {
+    totalInvitados += guest.quantity;
+  });
+  
+  console.log(totalInvitados);
+
   return(
     <div className={styles.container}>
       <div className={styles.border}>
