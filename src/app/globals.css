@@ -16,6 +16,32 @@
   }
 }
 
+@font-face {
+  font-family: Philosopher-Bold;
+  src: url(../config/Philosopher-Bold.ttf);
+}
+
+@font-face {
+  font-family: Philosopher-Regular;
+  src: url(../config/Philosopher-Regular.ttf);
+}
+
+@font-face {
+  font-family: Philosopher-Italic;
+  src: url(../config/Philosopher-Italic.ttf);
+}
+
+@font-face {
+  font-family: Philosopher-BoldItalic;
+  src: url(../config/Philosopher-BoldItalic.ttf);
+}
+
+@font-face {
+  font-family: Weather-Sunday;
+  src: url(../config/Weather\ Sunday\ -\ Personal\ Use.otf);
+}
+
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -33,26 +59,20 @@ body {
 }
 
 .timer-wrapper {
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 2;
-  width: 100%;
-  max-width: 1000px; /* Máximo ancho para pantallas grandes */
   margin: 0 auto;
+  margin-top: 1.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  padding: 0 2rem;
 }
 
 .timer-inner {
-  color: #000000;
+  color: #ca9a51;
   display: flex;
-  background-color: #ffffff;
-  padding: 1rem;
   justify-content: center;
   flex-wrap: nowrap; /* Asegura que los elementos no se envuelvan */
-  overflow: hidden;
-  width: 100%;
 }
 
 .timer-segment {
@@ -60,82 +80,63 @@ body {
   flex-direction: column;
   text-align: center;
   margin: 0 1rem;
-  min-width: 80px;
-  flex-grow: 1;
 }
 
-.divider,
 .time {
-  font-size: 5vw; /* Usa vw para un tamaño de fuente que responda al tamaño de la pantalla */
-}
-
-.divider {
-  padding: 0 1rem;
+  font-size: 9vw;
+  font-family: Philosopher-Bold;
 }
 
 .label {
-  font-size: 2vw; /* Usa vw para que se adapte al tamaño de la pantalla */
+  font-size: 4vw; /* Usa vw para que se adapte al tamaño de la pantalla */
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: Philosopher-Bold;
+  color: #fff;
 }
 
-h1 {
-  z-index: 2;
-  font-size: 10vw;
-  color: #fff;
+
+/* modal */
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
   text-align: center;
 }
 
-video {
-  z-index: 1;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
+.close_button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  cursor: pointer;
 }
 
-@media (min-width: 768px) {
-  .timer-segment {
-    margin: auto;
-    min-width: 20px;
-  }
-
-  .divider,
-  .time {
-    font-size: 7rem;
-  }
-
-  .label {
-    font-size: 2rem;
-  }
-
-  h1 {
-    font-size: 10rem;
-  }
+.qr_image {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
 }
 
-@media (max-width: 600px) {
-  .timer-segment {
-    margin: auto;
-    min-width: 10px;
-  }
-
-  .divider,
-  .time {
-    font-size: 10vw; /* Ajusta para que sea más grande en móviles */
-  }
-
-  .label {
-    font-size: 3vw;
-  }
-
-  h1 {
-    font-size: 15vw;
-  }
-
-  .timer-wrapper {
-  }
-
-  .timer-inner {
-    /* padding: 1rem; */
-  }
+.download_button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

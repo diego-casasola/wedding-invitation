@@ -1,10 +1,585 @@
-.container{
-    /* padding: 1rem */
+.container {
+	position: relative;
+	width: 100vw;
+	max-width: 100vw;
+	background-image: url("/background.jpg");
+	/* darle mas contraste a la imagen de fondo */
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-bottom: 3rem;
 }
 
-.border{
-    /* border gold */
-    border: 1px solid #f1c40f;
-    padding: 1rem;
-    margin: 1rem;
+.title_container {
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.title {
+	margin-top: 3rem;
+	color: #ffff;
+	font-family: Philosopher-Bold;
+	position: relative;
+	text-transform: uppercase;
+	font-size: 1.2rem;
+}
+
+.title::after {
+	background: none;
+	content: attr(data-heading) / "";
+	left: 0;
+	top: 0;
+	z-index: -1;
+	position: absolute;
+	text-shadow: -1px 0 1px #ca9a51, 0 1px 1px #ca9a51,
+		5px 5px 10px rgba(0, 0, 0, 0.4), -5px -5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.name_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.name_novio {
+	color: #ca9a51;
+	font-family: Weather-Sunday;
+	position: relative;
+	font-size: 3rem;
+}
+
+.name_novio::after {
+	background: none;
+	content: attr(data-heading) / "";
+	left: 0;
+	top: 0;
+	z-index: -1;
+	position: absolute;
+	text-shadow: -1px 0 1px #ca9a51, 0 1px 1px #ca9a51,
+		5px 5px 10px rgba(0, 0, 0, 0.4), -5px -5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.name_and {
+	color: #ca9a51;
+	font-family: Weather-Sunday;
+	position: relative;
+	font-size: 3.5rem;
+	margin: -25px;
+}
+
+.name_and::after {
+	background: none;
+	content: attr(data-heading) / "";
+	left: 0;
+	top: 0;
+	z-index: -1;
+	position: absolute;
+	text-shadow: -1px 0 1px #ca9a51, 0 1px 1px #ca9a51,
+		5px 5px 10px rgba(0, 0, 0, 0.4), -5px -5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.name_novia {
+	color: #ca9a51;
+	font-family: Weather-Sunday;
+	position: relative;
+	font-size: 3rem;
+}
+
+.name_novia::after {
+	background: none;
+	content: attr(data-heading) / "";
+	left: 0;
+	top: 0;
+	z-index: -1;
+	position: absolute;
+	text-shadow: -1px 0 1px #ca9a51, 0 1px 1px #ca9a51,
+		5px 5px 10px rgba(0, 0, 0, 0.4), -5px -5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.music_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 15px;
+}
+
+.music_text {
+	font-family: Philosopher-Bold;
+	position: relative;
+	font-size: 1rem;
+}
+
+.heart {
+	color: #ca9a51;
+	font-size: 1.3rem;
+	/* margen izquiero y derecho */
+	margin: 0 7px;
+}
+
+.imageContainer {
+	width: 100%;
+}
+
+.cita_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1.5rem;
+}
+
+.texto {
+	color: #ffff;
+	font-family: Philosopher-Bold;
+	position: relative;
+	font-size: 1rem;
+	text-align: center;
+}
+
+.cita {
+	color: #ca9a51;
+	font-family: Philosopher-Italic;
+	position: relative;
+	font-size: 1rem;
+	text-align: center;
+}
+
+.svgContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.svg {
+	width: 5.5rem;
+}
+
+.padres_container {
+	justify-content: center;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.text_title {
+	color: #ca9a51;
+	font-family: Weather-Sunday;
+	position: relative;
+	font-size: 2.2rem;
+	text-align: center;
+}
+
+.fathers_cont {
+	justify-content: center;
+	align-items: center;
+	margin-top: 1.5rem;
+}
+
+.fathers {
+	justify-content: center;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.fathers :nth-child(2) {
+	margin-top: 0.2rem;
+}
+
+.fathers_title {
+	color: #fff;
+	font-family: Philosopher-Bold;
+	position: relative;
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+.father {
+	color: #fff;
+	font-family: Philosopher-Italic;
+	position: relative;
+	font-size: 1.2rem;
+	text-align: center;
+}
+
+.imageContainer_3 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1.5rem;
+}
+
+.invitation_text {
+	color: #ffff;
+	font-family: Weather-Sunday;
+	position: relative;
+	font-size: 2.2rem;
+	text-align: center;
+	margin-top: 0rem;
+}
+
+.date_container {
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 1.8rem;
+	width: 80%;
+}
+
+.date_content {
+	background-color: #fff;
+}
+
+.day,
+.hour {
+	color: #ca9a51;
+	font-family: Philosopher-Bold;
+	position: relative;
+	font-size: 1.5rem;
+	text-transform: uppercase;
+	border-top: 2px solid #ca9a51;
+	border-bottom: 2px solid #ca9a51;
+	width: 100px;
+	/* Ajusta el ancho según sea necesario */
+	text-align: center;
+	/* Centra el texto */
+	height: 40px;
+	/* Ajusta la altura según sea necesario */
+	/* centrar verticalmente */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.day {
+	font-size: 1.4rem;
+}
+
+.date {
+	color: #ca9a51;
+	font-family: Philosopher-Bold;
+	position: relative;
+	font-size: 1.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.date_number {
+	color: #ca9a51;
+	font-family: Philosopher-Bold;
+	position: relative;
+	font-size: 2.5rem;
+	text-transform: uppercase;
+}
+
+.date_month {
+	color: #ca9a51;
+	font-family: Philosopher-Bold;
+	position: relative;
+	font-size: 2.5rem;
+	text-transform: uppercase;
+	margin-top: -1.2rem;
+}
+
+.count_days {
+	color: #ffff;
+	position: relative;
+	margin-top: 1.8rem;
+}
+
+.count_days_text {
+	margin-top: 1rem;
+	color: #fff;
+	font-family: Weather-Sunday;
+	position: relative;
+	font-size: 2.2rem;
+	text-align: center;
+}
+
+.place_container {
+	margin-top: 2.5rem;
+}
+
+.place_direction_container {
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.place_title {
+	font-family: Philosopher-Bold;
+	font-size: 1.5rem;
+}
+
+.place_direction {
+	font-family: Philosopher-Regular;
+	font-size: 1.3rem;
+}
+
+.place_button {
+	margin-top: 1.5rem;
+}
+
+.direction_button {
+	background-color: #ca9a51;
+	color: white;
+	font-family: Philosopher-Bold;
+	font-size: 1.2rem;
+	padding: 0.75rem 1.5rem;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+}
+
+.direction_button:hover {
+	background-color: white;
+	/* Cambia el fondo al pasar el cursor */
+	color: #ca9a51;
+	/* Cambia el color del texto */
+	transform: scale(1.05);
+	/* Aumenta ligeramente el tamaño del botón */
+	box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+	/* Sombra más grande al hacer hover */
+}
+
+.imageContainer_4 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 2.5rem;
+}
+
+.svgContainer2 {
+	margin-top: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.svg2 {
+	width: 5rem;
+}
+
+.dress_codeinfo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1.5rem;
+	flex-direction: column;
+}
+
+.dresscode_title {
+	font-family: Weather-Sunday;
+	font-size: 2rem;
+	color: #ca9a51;
+}
+
+.dresscode_dress {
+	margin-top: 0.6rem;
+	font-family: Philosopher-Regular;
+	font-size: 1rem;
+}
+
+.dresscode_info {
+	margin-top: 0.6rem;
+	text-align: center;
+	font-size: 1rem;
+	font-family: Philosopher-Regular;
+}
+
+.itinerario_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1.5rem;
+	flex-direction: column;
+}
+
+.itinerario_title {
+	font-family: Weather-Sunday;
+	color: #ca9a51;
+	font-size: 2rem;
+}
+
+.imageContainer_5 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.gift_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 2rem;
+	flex-direction: column;
+}
+
+.gifts_title {
+	text-align: center;
+	font-family: Weather-Sunday;
+	font-size: 2rem;
+	color: #ca9a51;
+}
+
+.gift_text {
+	margin-top: 1rem;
+	text-align: center;
+	font-family: Philosopher-Regular;
+	font-size: 1.1rem;
+}
+
+.thanks {
+	margin-top: 1rem;
+	text-align: center;
+	font-family: Philosopher-Italic;
+	font-size: 1rem;
+}
+
+.gift_buttons {
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.gift_list_button {
+	margin-top: 1rem;
+	font-size: 1rem;
+	height: 3rem;
+}
+
+.imageContainer_6 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 2rem;
+}
+
+.persons_quantity_container{
+	margin-top: 2rem;
+	text-align: center;
+	font-family: Philosopher-Italic;
+	font-size: 1.5rem;
+	/* background-color: #000; */
+	color: #fff;
+	height: auto;
+	align-items: center;
+	align-content: center;
+}
+
+.persons_quantity_title{
+	text-align: center;
+	font-family: Weather-Sunday;
+	font-size: 2rem;
+	color: #ca9a51;
+}
+
+.first_text{
+	margin-top: 1rem;
+}
+
+.quantity_text{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.quantity {
+	width: 4rem;
+	height: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 1rem;
+	border: 3px solid #ca9a51;
+	padding: 0.5rem;
+	font-size: 2rem;
+	border-radius: 1rem;
+	font-family: Philosopher-BoldItalic;
+}
+
+.no_kids_container{
+	margin-top: 2rem;
+	text-align: center;
+	color: #fff;
+	height: auto;
+	align-items: center;
+	align-content: center;
+}
+
+.no_kids_title{
+	text-align: center;
+	font-family: Weather-Sunday;
+	font-size: 2rem;
+	color: #ca9a51;
+}
+
+.no_kids_concept{
+	margin-top: 1rem;
+	text-align: center;
+	font-family: Philosopher-Regular;
+	font-size: 1.1rem;
+}
+
+.confirmar_asistencia_container{
+	margin-top: 2rem;
+	text-align: center;
+	color: #fff;
+	height: auto;
+	align-items: center;
+	align-content: center;
+}
+
+.confirmar_asistencia_title{
+	text-align: center;
+	font-family: Weather-Sunday;
+	font-size: 2rem;
+	color: #ca9a51;
+}
+
+.confirmar_asistencia_text{
+	margin-top: 1rem;
+	text-align: center;
+	font-family: Philosopher-Regular;
+	font-size: 1.1rem;
+}
+
+.last_container{
+	margin-top: 2rem;
+	text-align: center;
+	color: #fff;
+	height: auto;
+	align-items: center;
+	align-content: center;
+}
+
+.last_container_frase{
+	margin-top: 1rem;
+	text-align: center;
+	font-family: Philosopher-Regular;
+	font-size: 1.1rem;
+}
+
+.last_container_esperamos{
+	margin-top: 1rem;
+	text-align: center;
+	font-family: Weather-Sunday;
+	font-size: 2rem;
+	color: #ca9a51;
 }

@@ -1,7 +1,7 @@
 {
-    "novio": "Diego",
-    "novia": "Mafer",
-    "wedding-date": "2023-11-17",
+    "novio": "Diego André",
+    "novia": "María Fernanda",
+    "wedding-date": "11/17/2024 18:00:00",
     "wedding-place": "Macarella Eventos",
     "wedding-place-address": "Av. los Cusis entre Banzer y Beni",
     "wedding-place-city": "Santa Cruz de la Sierra",
@@ -82,7 +82,7 @@
             },
             {
                 "id": "5d5ad8f6-166d-433f-9af8-86df78c5a919",
-                "guests": "María Jose Zaavedra",
+                "guests": "María Jose Saavedra",
                 "quantity": 1,
                 "table": 0,
                 "confirmed": false
