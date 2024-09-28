@@ -1,7 +1,22 @@
+"use client";
+import { useEffect, useState } from "react";
+import json_wedding_data from "../../data/wedding-data.json";
+
 export default function Admin() {
-    return(
+    const [cantInvitados, setCantInvitados] = useState(0);
+
+    useEffect(() => {
+        let data = json_wedding_data;
+        let totalInvitados = 0;
+        data.guests.forEach((guest) => {
+            totalInvitados += guest.quantity;
+        });
+        setCantInvitados(totalInvitados);
+    }, []);
+
+    return (
         <div>
-            this is for admin page
+            La Cantidad de invitados es: {cantInvitados}
         </div>
-    )
+    );
 }
