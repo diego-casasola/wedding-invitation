@@ -58,6 +58,10 @@ body {
   }
 }
 
+.customFont{
+  font-family: 'Philosopher-Regular', sans-serif;
+}
+
 .timer-wrapper {
   margin: 0 auto;
   margin-top: 1.8rem;
