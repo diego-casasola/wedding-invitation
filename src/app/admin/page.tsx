@@ -269,6 +269,7 @@ export default function Admin() {
                     value={filterTable}
                     onChange={(e) => setFilterTable(e.target.value)}
                 />
+                <h2>Tipo Invitación:</h2>
                 <select
                     value={filterFisica}
                     onChange={(e) => setFilterFisica(e.target.value)}
@@ -277,6 +278,7 @@ export default function Admin() {
                     <option value="true">Física</option>
                     <option value="false">Digital</option>
                 </select>
+                <h2>Estado:</h2>
                 <select
                     value={filterDelivered}
                     onChange={(e) => setFilterDelivered(e.target.value)}
@@ -285,6 +287,7 @@ export default function Admin() {
                     <option value="true">Entregado</option>
                     <option value="false">No Entregado</option>
                 </select>
+                <h2>Confirmado:</h2>
                 <select
                     value={filterConfirmed}
                     onChange={(e) => setFilterConfirmed(e.target.value)}
