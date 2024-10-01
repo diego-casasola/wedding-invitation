@@ -120,7 +120,7 @@ export default function Home({params}: Props) {
                         </div>
                         <div className={styles.cita_container}>
                             <h2 className={styles.texto}>
-                                Nosotros amamos porque Él nos amó primero.
+                                Nosotros amamos porque Dios nos amó primero.
                             </h2>
                             <h2 className={styles.cita}>
                                 1 Juan 4:19

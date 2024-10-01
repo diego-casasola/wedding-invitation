@@ -94,7 +94,7 @@ export default function Admin() {
     };
 
     const handleCopyLink = (guest: Guest) => {
-        const link = `http://192.168.0.2:3000/${guest.id}`;
+        const link = `https://bodadm2024.sd-bo.com/${guest.id}`;
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(link).then(() => {
                 alert(`Link copiado: ${link}`);
