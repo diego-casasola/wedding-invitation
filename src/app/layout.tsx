@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'Diego & Mafer',
     images: [
       {
-        url: "/public/assets/portada.png",
+        url: "/portada.png",
         width: 800,
         height: 600,
       }

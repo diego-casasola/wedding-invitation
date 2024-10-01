@@ -39,7 +39,7 @@ export default function Home({params}: Props) {
     const handleClose = () => setOpen(false);
     const data = json_wedding_data;
 
-    const AUDIO_FILE = "/Solo-tu.mp3";
+    const AUDIO_FILE = "/solo-tu-ori.mp3";
 
     const guest = data.guests.find((guest) => guest.id == id);
 
