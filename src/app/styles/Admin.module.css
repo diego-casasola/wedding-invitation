@@ -1,3 +1,8 @@
+.tableContainer {
+    width: 100%;
+    overflow-x: auto; /* Permitir desplazamiento horizontal */
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -52,14 +57,118 @@
     background-color: #0056b3; /* Fondo del botón al pasar el ratón */
 }
 
+/* Estilos para los botones de acción */
+.actionButton {
+    padding: 8px 16px;
+    margin: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    width: 150px; /* Ancho fijo para todos los botones */
+    height: 70px; /* Altura fija para todos los botones */
+    text-align: center; /* Alinear el texto al centro */
+}
+
+.actions {
+    display: flex;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.confirmButton {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+}
+
+.confirmButton:hover {
+    background-color: #45a049;
+}
+
+.unconfirmButton {
+    background-color: #f44336; /* Rojo */
+    color: white;
+}
+
+.unconfirmButton:hover {
+    background-color: #da190b;
+}
+
+.deliverButton {
+    background-color: #008CBA; /* Azul */
+    color: white;
+}
+
+.deliverButton:hover {
+    background-color: #007bb5;
+}
+
+.editButton {
+    background-color: #ff9800; /* Naranja */
+    color: white;
+}
+
+.copyLinkButton {
+    background-color: #6c757d; /* Gris */
+    color: white;
+}
+
+.copyLinkButton:hover {
+    background-color: #5a6268;
+}
+
+.editButton:hover {
+    background-color: #e68900;
+}
+
+.tableInput {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #444; /* Fondo de los inputs */
+    color: #fff; /* Color del texto de los inputs */
+    border: 1px solid #555; /* Color del borde de los inputs */
+    border-radius: 5px;
+    width: 100%;
+}
+
 /* Estilos responsivos para dispositivos móviles */
 @media (max-width: 600px) {
+    .tableContainer {
+        overflow-x: auto; /* Permitir desplazamiento horizontal */
+    }
+
     .table {
         display: block;
+        width: 100%;
+        overflow-x: auto; /* Permitir desplazamiento horizontal */
+        white-space: nowrap; /* Evitar que el contenido se ajuste automáticamente */
+    }
+
+    .tableBody {
+        display: block;
+        width: 100%;
+        overflow-x: auto; /* Permitir desplazamiento horizontal */
+        white-space: nowrap; /* Evitar que el contenido se ajuste automáticamente */
     }
 
     .table thead {
         display: none;
+    }
+
+    .actions {
+        /* aquí hay botones, estos botones deben mostrarse en columna, no todos en una sola fila */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .actionButton {
+        width: 100%; /* Ancho completo */
+        height: auto;
     }
 
     .table tr {
@@ -89,6 +198,10 @@
         text-transform: uppercase;
     }
 
+    .table td[data-label="Acciones"]::before {
+        content: none; /* Ocultar el texto "Acciones" */
+    }
+
     .filters {
         display: flex;
         flex-direction: column;
@@ -100,6 +213,15 @@
         padding: 8px;
         font-size: 14px;
     }
+}
+
+/* Estilo para el nombre del invitado */
+.guestName {
+    display: inline-block;
+    max-width: auto; /* Ancho fijo */
+    word-wrap: break-word; /* Ajustar el texto hacia abajo si es más largo */
+    white-space: normal; /* Permitir que el texto se ajuste en varias líneas */
+    text-align: right;
 }
 
 .modal {
@@ -123,6 +245,15 @@
 
 .modalContent p {
     margin-bottom: 20px;
+}
+
+.modalContent input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    width: 100%;
 }
 
 .modalContent button {
