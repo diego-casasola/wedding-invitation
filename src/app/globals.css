@@ -52,6 +52,17 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+body {
+	background-image: url("/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -143,4 +154,49 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .timer-wrapper {
+    margin-top: 2.5rem;
+  }
+
+  .timer-inner {
+    font-size: 1.5rem;
+  }
+
+  .timer-segment {
+    margin: 0 1.5rem;
+  }
+
+  .time {
+    font-size: 3rem;
+  }
+
+  .label {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .timer-wrapper {
+    margin-top: 3rem;
+  }
+
+  .timer-inner {
+    font-size: 2rem;
+  }
+
+  .timer-segment {
+    margin: 0 2rem;
+  }
+
+  .time {
+    font-size: 4rem;
+  }
+
+  .label {
+    font-size: 2rem;
+  }
 }

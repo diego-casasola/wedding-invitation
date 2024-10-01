@@ -1,6 +1,6 @@
 .tableContainer {
     width: 100%;
-    overflow-x: auto; /* Permitir desplazamiento horizontal */
+    overflow-x: auto;
 }
 
 .table {
@@ -9,26 +9,26 @@
     margin: 20px 0;
     font-size: 18px;
     text-align: left;
-    background-color: #333; /* Fondo de la tabla */
-    color: #fff; /* Color del texto */
+    background-color: #333;
+    color: #fff;
 }
 
 .table th, .table td {
     padding: 12px 15px;
-    border: 1px solid #555; /* Color del borde */
+    border: 1px solid #555;
 }
 
 .table th {
-    background-color: #444; /* Fondo del encabezado */
+    background-color: #444;
 }
 
 .table tr:nth-child(even) {
-    background-color: #3a3a3a; /* Fondo de las filas pares */
+    background-color: #3a3a3a;
 }
 
-.table tr:hover {
-    background-color: #555; /* Fondo al pasar el ratón */
-}
+/* .table tr:hover {
+    background-color: #555;
+} */
 
 .filters {
     margin-bottom: 20px;
@@ -40,24 +40,29 @@
 .filters input, .filters select, .filters button {
     padding: 10px;
     font-size: 16px;
-    background-color: #444; /* Fondo de los inputs */
-    color: #fff; /* Color del texto de los inputs */
-    border: 1px solid #555; /* Color del borde de los inputs */
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
     border-radius: 5px;
 }
 
 .filters button {
-    background-color: #007bff; /* Fondo del botón */
+    background-color: #007bff;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .filters button:hover {
-    background-color: #0056b3; /* Fondo del botón al pasar el ratón */
+    background-color: #0056b3;
 }
 
-/* Estilos para los botones de acción */
+.mesa-info {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #fff;
+}
+
 .actionButton {
     padding: 8px 16px;
     margin: 4px;
@@ -66,9 +71,9 @@
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s ease;
-    width: 150px; /* Ancho fijo para todos los botones */
-    height: 70px; /* Altura fija para todos los botones */
-    text-align: center; /* Alinear el texto al centro */
+    width: 150px;
+    height: 70px;
+    text-align: center;
 }
 
 .actions {
@@ -82,7 +87,7 @@
 }
 
 .confirmButton {
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50;
     color: white;
 }
 
@@ -91,7 +96,7 @@
 }
 
 .unconfirmButton {
-    background-color: #f44336; /* Rojo */
+    background-color: #f44336;
     color: white;
 }
 
@@ -100,7 +105,7 @@
 }
 
 .deliverButton {
-    background-color: #008CBA; /* Azul */
+    background-color: #008CBA;
     color: white;
 }
 
@@ -109,12 +114,12 @@
 }
 
 .editButton {
-    background-color: #ff9800; /* Naranja */
+    background-color: #ff9800;
     color: white;
 }
 
 .copyLinkButton {
-    background-color: #6c757d; /* Gris */
+    background-color: #6c757d;
     color: white;
 }
 
@@ -129,31 +134,30 @@
 .tableInput {
     padding: 10px;
     font-size: 16px;
-    background-color: #444; /* Fondo de los inputs */
-    color: #fff; /* Color del texto de los inputs */
-    border: 1px solid #555; /* Color del borde de los inputs */
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
     border-radius: 5px;
     width: 100%;
 }
 
-/* Estilos responsivos para dispositivos móviles */
 @media (max-width: 600px) {
     .tableContainer {
-        overflow-x: auto; /* Permitir desplazamiento horizontal */
+        overflow-x: auto;
     }
 
     .table {
         display: block;
         width: 100%;
-        overflow-x: auto; /* Permitir desplazamiento horizontal */
-        white-space: nowrap; /* Evitar que el contenido se ajuste automáticamente */
+        overflow-x: auto;
+        white-space: nowrap;
     }
 
     .tableBody {
         display: block;
         width: 100%;
-        overflow-x: auto; /* Permitir desplazamiento horizontal */
-        white-space: nowrap; /* Evitar que el contenido se ajuste automáticamente */
+        overflow-x: auto;
+        white-space: nowrap;
     }
 
     .table thead {
@@ -161,23 +165,22 @@
     }
 
     .actions {
-        /* aquí hay botones, estos botones deben mostrarse en columna, no todos en una sola fila */
         display: flex;
         flex-direction: column;
     }
 
     .actionButton {
-        width: 100%; /* Ancho completo */
+        width: 100%;
         height: auto;
     }
 
     .table tr {
         display: block;
-        margin: 10px auto; /* Centrar los cards */
+        margin: 10px auto;
         border: 1px solid #555;
         background-color: #444;
         padding: 10px;
-        max-width: 90%; /* Limitar el ancho máximo */
+        max-width: 90%;
     }
 
     .table td {
@@ -199,7 +202,7 @@
     }
 
     .table td[data-label="Acciones"]::before {
-        content: none; /* Ocultar el texto "Acciones" */
+        content: none;
     }
 
     .filters {
@@ -215,12 +218,11 @@
     }
 }
 
-/* Estilo para el nombre del invitado */
 .guestName {
     display: inline-block;
-    max-width: auto; /* Ancho fijo */
-    word-wrap: break-word; /* Ajustar el texto hacia abajo si es más largo */
-    white-space: normal; /* Permitir que el texto se ajuste en varias líneas */
+    max-width: auto;
+    word-wrap: break-word;
+    white-space: normal;
     text-align: right;
 }
 
@@ -275,10 +277,121 @@
     background-color: #0056b3;
 }
 
+.modalContent button:first-of-type {
+    background-color: #007bff;
+    color: #000000;
+}
+
+.modalContent button:first-of-type:hover {
+    background-color: #0056b3;
+}
+
+/* .modalContent button:last-of-type {
+    background-color: #ccc;
+} */
+
+/* .modalContent button:last-of-type:hover {
+    background-color: #999;
+} */
+
+.invitados-container {
+    margin-top: 2rem;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.invitado {
+    margin: 7px;
+}
+
+.numero {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.label {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.editGuestButton {
+    background-color: #74a0a8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.editGuestButton:hover {
+    background-color: #74a0a8;
+}
+
+.modalContent {
+    background-color: #7a7a7a;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.modalContent p {
+    margin-bottom: 20px;
+}
+
+.modalContent input, .modalContent select {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #444;
+    color: #fff;
+}
+
+.modalContent button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modalContent button:first-of-type {
+    background-color: #007bff;
+    color: #000000;
+}
+
+.modalContent button:first-of-type:hover {
+    background-color: #0056b3;
+}
+
 .modalContent button:last-of-type {
     background-color: #ccc;
 }
 
 .modalContent button:last-of-type:hover {
     background-color: #999;
+}
+
+.actionButton {
+    padding: 8px 16px;
+    margin: 4px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.deleteButton {
+    background-color: red;
+    color: white;
 }

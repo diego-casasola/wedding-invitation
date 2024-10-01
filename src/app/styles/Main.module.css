@@ -673,3 +673,119 @@
 	font-size: 2rem;
 	color: #ca9a51;
 }
+
+/* Media Query para Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        padding: 2rem;
+    }
+
+    .welcomeScreen {
+        height: 80vh;
+    }
+
+    .for, .guests, .viewInvitationButton {
+        font-size: 2.5rem;
+    }
+
+    .name_novio, .name_novia {
+        font-size: 2.5rem;
+    }
+
+    .name_and {
+        font-size: 3rem;
+    }
+
+    .text_title, .invitation_text, .count_days_text, .persons_quantity_title, .no_kids_title, .confirmar_asistencia_title {
+        font-size: 2rem;
+    }
+
+    .place_title, .fathers_title, .dresscode_title, .itinerario_title, .gifts_title {
+        font-size: 1.5rem;
+    }
+
+    .place_direction, .gift_text, .thanks, .confirmar_asistencia_text, .last_container_frase {
+        font-size: 1rem;
+    }
+
+    .quantity {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+    }
+}
+
+/* Media Query para Desktop */
+@media (min-width: 1025px) {
+    .container {
+        padding: 3rem;
+		width: 60%
+    }
+
+    .welcomeScreen {
+        height: 70vh;
+    }
+
+    .for, .guests, .viewInvitationButton {
+        font-size: 3rem;
+    }
+
+    .name_novio, .name_novia {
+        font-size: 3rem;
+    }
+
+    .name_and {
+        font-size: 3.5rem;
+    }
+
+	.date_container{
+		width: 50%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 1.8rem;
+		gap: 1rem;
+	}
+
+	.day, .hour{
+		color: #ca9a51;
+		font-family: Philosopher-Bold;
+		position: relative;
+		font-size: 1.5rem;
+		text-transform: uppercase;
+		border-top: 2px solid #ca9a51;
+		border-bottom: 2px solid #ca9a51;
+		width: 180px;
+		/* Ajusta el ancho según sea necesario */
+		text-align: center;
+		/* Centra el texto */
+		height: 60px;
+		/* Ajusta la altura según sea necesario */
+		/* centrar verticalmente */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 2.5rem;
+	}
+
+	.date_number, .date_month {
+		font-size: 3rem;
+	}
+    .text_title, .invitation_text, .count_days_text, .persons_quantity_title, .no_kids_title, .confirmar_asistencia_title {
+        font-size: 2.5rem;
+    }
+
+    .place_title, .fathers_title, .dresscode_title, .itinerario_title, .gifts_title {
+        font-size: 2rem;
+    }
+
+    .place_direction, .gift_text, .thanks, .confirmar_asistencia_text, .last_container_frase {
+        font-size: 1.2rem;
+    }
+
+    .quantity {
+        width: 4rem;
+        height: 4rem;
+        font-size: 2rem;
+    }
+}

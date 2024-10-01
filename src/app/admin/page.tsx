@@ -21,22 +21,27 @@ export default function Admin() {
     const [cantInvitados, setCantInvitados] = useState(0);
     const [cantInvFisica, setCantInvFisica] = useState(0);
     const [cantInvVirtual, setCantInvVirtual] = useState(0);
+    const [cantInvConfirmados, setCantInvConfirmados] = useState(0);
 
     const [filterGuests, setFilterGuests] = useState('');
     const [filterTable, setFilterTable] = useState('');
     const [filterFisica, setFilterFisica] = useState('');
     const [filterDelivered, setFilterDelivered] = useState('');
+    const [filterConfirmed, setFilterConfirmed] = useState('');
 
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState('');
     const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
     const [actionType, setActionType] = useState('');
     const [newTableNumber, setNewTableNumber] = useState<number | null>(null);
+    const [editGuestData, setEditGuestData] = useState<Partial<Guest>>({});
+    const [newGuestData, setNewGuestData] = useState<Partial<Guest>>({});
 
     useEffect(() => {
         let totalInvitados = 0;
         let cantInvFisica = 0;
         let cantInvVirtual = 0;
+        let cantInvConfirmados = 0;
         data.guests.forEach((guest) => {
             totalInvitados += guest.quantity;
             if (guest.fisica) {
@@ -44,18 +49,38 @@ export default function Admin() {
             } else if (guest.fisica == false) {
                 cantInvVirtual += 1;
             }
+            if (guest.confirmed) {
+                cantInvConfirmados += 1;
+            }
         });
         setCantInvitados(totalInvitados);
         setCantInvFisica(cantInvFisica);
         setCantInvVirtual(cantInvVirtual);
+        setCantInvConfirmados(cantInvConfirmados);
     }, [data]);
+
+    useEffect(() => {
+        if (filterTable) {
+            const invitadosMesa = data.guests.reduce((acc, guest) => {
+                return guest.table.toString() === filterTable ? acc + guest.quantity : acc;
+            }, 0);
+            setCantInvitados(invitadosMesa);
+        } else {
+            let totalInvitados = 0;
+            data.guests.forEach((guest) => {
+                totalInvitados += guest.quantity;
+            });
+            setCantInvitados(totalInvitados);
+        }
+    }, [filterTable, data]);
 
     const filteredData = data.guests.filter((guest) => {
         return (
             (filterGuests === '' || guest.guests.toLowerCase().includes(filterGuests.toLowerCase())) &&
             (filterTable === '' || guest.table.toString() === filterTable) &&
             (filterFisica === '' || guest.fisica.toString() === filterFisica) &&
-            (filterDelivered === '' || guest.delivered.toString() === filterDelivered)
+            (filterDelivered === '' || guest.delivered.toString() === filterDelivered) &&
+            (filterConfirmed === '' || guest.confirmed.toString() === filterConfirmed)
         );
     });
 
@@ -64,6 +89,7 @@ export default function Admin() {
         setFilterTable('');
         setFilterFisica('');
         setFilterDelivered('');
+        setFilterConfirmed('');
     };
 
     const handleConfirmAttendance = (guest: Guest) => {
@@ -93,6 +119,19 @@ export default function Admin() {
         setShowModal(true);
     };
 
+    const handleEditGuest = (guest: Guest) => {
+        setSelectedGuest(guest);
+        setEditGuestData({
+            guests: guest.guests,
+            quantity: guest.quantity,
+            cel1: guest.cel1,
+            fisica: guest.fisica,
+        });
+        setModalContent(`Editar datos del invitado ${guest.guests}`);
+        setActionType('editGuest');
+        setShowModal(true);
+    };
+
     const handleCopyLink = (guest: Guest) => {
         const link = `https://bodadm2024.sd-bo.com/${guest.id}`;
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -118,33 +157,56 @@ export default function Admin() {
         }
     };
 
+    const handleDeleteGuest = (guest: Guest) => {
+        setSelectedGuest(guest);
+        setModalContent(`¿Está seguro que desea eliminar al invitado ${guest.guests}?`);
+        setActionType('delete');
+        setShowModal(true);
+    };
+
     const handleModalClose = () => {
         setShowModal(false);
         setSelectedGuest(null);
         setActionType('');
         setNewTableNumber(null);
+        setEditGuestData({});
+        setNewGuestData({});
     };
 
     const handleModalConfirm = async () => {
-        if (!selectedGuest) return;
+        if (!selectedGuest && actionType !== 'addGuest') return;
 
         let updatedData;
         if (actionType === 'confirm') {
             updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest.id ? { ...guest, confirmed: true } : guest
+                guest.id === selectedGuest!.id ? { ...guest, confirmed: true } : guest
             );
         } else if (actionType === 'unconfirm') {
             updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest.id ? { ...guest, confirmed: false } : guest
+                guest.id === selectedGuest!.id ? { ...guest, confirmed: false } : guest
             );
         } else if (actionType === 'deliver') {
             updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest.id ? { ...guest, delivered: true } : guest
+                guest.id === selectedGuest!.id ? { ...guest, delivered: true } : guest
             );
         } else if (actionType === 'editTable' && newTableNumber !== null) {
             updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest.id ? { ...guest, table: newTableNumber } : guest
+                guest.id === selectedGuest!.id ? { ...guest, table: newTableNumber } : guest
             );
+        } else if (actionType === 'editGuest') {
+            updatedData = data.guests.map((guest) =>
+                guest.id === selectedGuest!.id ? { ...guest, ...editGuestData } : guest
+            );
+        } else if (actionType === 'addGuest') {
+            const newGuest = {
+                ...newGuestData,
+                id: Date.now().toString(), // Generar un ID único
+                confirmed: false,
+                delivered: false,
+            } as Guest;
+            updatedData = [...data.guests, newGuest];
+        } else if (actionType === 'delete') {
+            updatedData = data.guests.filter((guest) => guest.id !== selectedGuest!.id);
         }
 
         // Llamada a la API para actualizar el JSON en el servidor
@@ -167,14 +229,31 @@ export default function Admin() {
         handleModalClose();
     };
 
+    const handleAddGuest = () => {
+        setModalContent('Añadir nuevo invitado');
+        setActionType('addGuest');
+        setShowModal(true);
+    };
+
     return (
         <div>
-            <div>
-                La Cantidad de invitados es: {cantInvitados}
-                <br />
-                La Cantidad de invitados fisicos es: {cantInvFisica}
-                <br />
-                La Cantidad de invitados virtuales es: {cantInvVirtual}
+            <div className={styles['invitados-container']}>
+                <div className={styles['invitado']}>
+                    <div className={styles['numero']}>{cantInvitados}</div>
+                    <div className={styles['label']}>Invitados</div>
+                </div>
+                <div className={styles['invitado']}>
+                    <div className={styles['numero']}>{cantInvFisica}</div>
+                    <div className={styles['label']}>Invitaciones Físicas</div>
+                </div>
+                <div className={styles['invitado']}>
+                    <div className={styles['numero']}>{cantInvVirtual}</div>
+                    <div className={styles['label']}>Invitaciones Digitales</div>
+                </div>
+                <div className={styles['invitado']}>
+                    <div className={styles['numero']}>{cantInvConfirmados}</div>
+                    <div className={styles['label']}>Invitados Confirmados</div>
+                </div>
             </div>
             <div className={styles.filters}>
                 <h2>Filtros</h2>
@@ -206,7 +285,16 @@ export default function Admin() {
                     <option value="true">Entregado</option>
                     <option value="false">No Entregado</option>
                 </select>
+                <select
+                    value={filterConfirmed}
+                    onChange={(e) => setFilterConfirmed(e.target.value)}
+                >
+                    <option value="">Todos</option>
+                    <option value="true">Confirmado</option>
+                    <option value="false">No Confirmado</option>
+                </select>
                 <button onClick={clearFilters}>Borrar Filtros</button>
+                <button onClick={handleAddGuest}>Añadir Invitados</button>
             </div>
             <div className={styles.tableContainer}>
                 <table className={styles.table}>
@@ -245,17 +333,29 @@ export default function Admin() {
                                     >
                                         Marcar como entregado
                                     </button>
-                                    <button
+                                    {/* <button
                                         className={`${styles.actionButton} ${styles.editButton}`}
                                         onClick={() => handleEditTable(guest)}
                                     >
                                         Editar mesa
+                                    </button> */}
+                                    <button
+                                        className={`${styles.actionButton} ${styles.editGuestButton}`}
+                                        onClick={() => handleEditGuest(guest)}
+                                    >
+                                        Editar
                                     </button>
                                     <button
                                         className={`${styles.actionButton} ${styles.copyLinkButton}`}
                                         onClick={() => handleCopyLink(guest)}
                                     >
                                         Copiar link
+                                    </button>
+                                    <button
+                                        className={`${styles.actionButton} ${styles.deleteButton}`}
+                                        onClick={() => handleDeleteGuest(guest)}
+                                    >
+                                        Eliminar
                                     </button>
                                 </td>
                             </tr>
@@ -275,6 +375,79 @@ export default function Admin() {
                                 placeholder="Nuevo número de mesa"
                                 className={styles.tableInput}
                             />
+                        )}
+                        {actionType === 'editGuest' && (
+                            <div>
+                                <input
+                                    type="text"
+                                    value={editGuestData.guests ?? ''}
+                                    onChange={(e) => setEditGuestData({ ...editGuestData, guests: e.target.value })}
+                                    placeholder="Nombre del invitado"
+                                    className={styles.tableInput}
+                                />
+                                <input
+                                    type="number"
+                                    value={editGuestData.quantity ?? ''}
+                                    onChange={(e) => setEditGuestData({ ...editGuestData, quantity: Number(e.target.value) })}
+                                    placeholder="Cantidad de pases"
+                                    className={styles.tableInput}
+                                />
+                                <input
+                                    type="text"
+                                    value={editGuestData.cel1 ?? ''}
+                                    onChange={(e) => setEditGuestData({ ...editGuestData, cel1: e.target.value })}
+                                    placeholder="Celular"
+                                    className={styles.tableInput}
+                                />
+                                <select
+                                    value={editGuestData.fisica?.toString() ?? ''}
+                                    onChange={(e) => setEditGuestData({ ...editGuestData, fisica: e.target.value === 'true' })}
+                                    className={styles.tableInput}
+                                >
+                                    <option value="true">Física</option>
+                                    <option value="false">Digital</option>
+                                </select>
+                            </div>
+                        )}
+                        {actionType === 'addGuest' && (
+                            <div>
+                                <input
+                                    type="text"
+                                    value={newGuestData.guests ?? ''}
+                                    onChange={(e) => setNewGuestData({ ...newGuestData, guests: e.target.value })}
+                                    placeholder="Nombre del invitado"
+                                    className={styles.tableInput}
+                                />
+                                <input
+                                    type="number"
+                                    value={newGuestData.quantity ?? ''}
+                                    onChange={(e) => setNewGuestData({ ...newGuestData, quantity: Number(e.target.value) })}
+                                    placeholder="Cantidad de pases"
+                                    className={styles.tableInput}
+                                />
+                                <input
+                                    type="text"
+                                    value={newGuestData.cel1 ?? ''}
+                                    onChange={(e) => setNewGuestData({ ...newGuestData, cel1: e.target.value })}
+                                    placeholder="Celular"
+                                    className={styles.tableInput}
+                                />
+                                <select
+                                    value={newGuestData.fisica?.toString() ?? ''}
+                                    onChange={(e) => setNewGuestData({ ...newGuestData, fisica: e.target.value === 'true' })}
+                                    className={styles.tableInput}
+                                >
+                                    <option value="true">Física</option>
+                                    <option value="false">Digital</option>
+                                </select>
+                                <input
+                                    type="number"
+                                    value={newGuestData.table ?? ''}
+                                    onChange={(e) => setNewGuestData({ ...newGuestData, table: Number(e.target.value) })}
+                                    placeholder="Número de mesa"
+                                    className={styles.tableInput}
+                                />
+                            </div>
                         )}
                         <button onClick={handleModalConfirm}>Sí</button>
                         <button onClick={handleModalClose}>No</button>
