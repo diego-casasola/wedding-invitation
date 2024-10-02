@@ -52,7 +52,13 @@ export default function Home({params}: Props) {
         if (guest!.quantity > 1){
             text = `Hola! Somos los invitados ${guest?.guests} y queremos confirmar nuestra asistencia a la boda de Diego y Mafer`
         } else {
-            text = `Hola! Soy el/la invitado/da ${guest?.guests} y quiero confirmar mi asistencia a la boda de Diego y Mafer`
+            // text = `Hola! Soy el/la invitado/da ${guest?.guests} y quiero confirmar mi asistencia a la boda de Diego y Mafer`
+            // 0 masculino 1 femenino
+            if (guest!.gender == 0){
+                text = `Hola! Soy el invitado ${guest?.guests} y quiero confirmar mi asistencia a la boda de Diego y Mafer`
+            } else if (guest!.gender == 1){
+                text = `Hola! Soy la invitada ${guest?.guests} y quiero confirmar mi asistencia a la boda de Diego y Mafer`
+            }
         }
         window.open(`https://api.whatsapp.com/send?phone=59178467687&text=${text}`, "_blank");
     }
