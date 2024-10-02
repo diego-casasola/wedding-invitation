@@ -126,6 +126,7 @@ export default function Admin() {
             quantity: guest.quantity,
             cel1: guest.cel1,
             fisica: guest.fisica,
+            table: guest.table,
         });
         setModalContent(`Editar datos del invitado ${guest.guests}`);
         setActionType('editGuest');
@@ -175,18 +176,18 @@ export default function Admin() {
 
     const handleModalConfirm = async () => {
         // antes de todo, debe actualizar la lista, para no perder datos que ya hayan registrado desde otro dispositivo
-        const responseData = await fetch('/api', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (responseData.ok) {
-            const data = await responseData.json();
-            setData({ guests: data.guests });
-        } else {
-            console.error('Error updating guest list');
-        }
+        // const responseData = await fetch('/api', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // });
+        // if (responseData.ok) {
+        //     const data = await responseData.json();
+        //     setData({ guests: data.guests });
+        // } else {
+        //     console.error('Error updating guest list');
+        // }
         if (!selectedGuest && actionType !== 'addGuest') return;
 
         let updatedData;
@@ -216,6 +217,7 @@ export default function Admin() {
                 id: Date.now().toString(), // Generar un ID único
                 confirmed: false,
                 delivered: false,
+                cel2: '',
             } as Guest;
             updatedData = [...data.guests, newGuest];
         } else if (actionType === 'delete') {
