@@ -109,7 +109,7 @@ export default function Home({params}: Props) {
                         <div className={styles.imageContainer}>
                             <Image 
                                 priority
-                                src="/assets/principal.png" 
+                                src="/assets/principal.webp" 
                                 width={1000} 
                                 height={1000} 
                                 layout="responsive" 
@@ -188,7 +188,7 @@ export default function Home({params}: Props) {
                         <div className={styles.imageContainer_3}>
                             <Image 
                                 priority
-                                src="/assets/3.png" 
+                                src="/assets/3.webp" 
                                 width={1000} 
                                 height={1000} 
                                 layout="responsive" 
@@ -262,7 +262,7 @@ export default function Home({params}: Props) {
                         <div className={styles.imageContainer_4}>
                             <Image 
                                 priority
-                                src="/assets/4.png" 
+                                src="/assets/4.webp" 
                                 width={1000} 
                                 height={1000} 
                                 layout="responsive" 
@@ -300,7 +300,7 @@ export default function Home({params}: Props) {
                         <div className={styles.imageContainer_5}>
                             <Image 
                                 priority
-                                src="/assets/5.png" 
+                                src="/assets/5.webp" 
                                 width={1000} 
                                 height={1000} 
                                 layout="responsive" 
@@ -340,7 +340,7 @@ export default function Home({params}: Props) {
                                         <Image
                                             width={1000}
                                             height={1000}
-                                            src="/assets/qr.png"
+                                            src="/assets/qr.webp"
                                             alt="qr"
                                         />
                                     </Box>
@@ -355,7 +355,7 @@ export default function Home({params}: Props) {
                         <div className={styles.imageContainer_6}>
                             <Image 
                                 priority
-                                src="/assets/6.png" 
+                                src="/assets/6.webp" 
                                 width={1000} 
                                 height={1000} 
                                 layout="responsive" 
@@ -387,7 +387,7 @@ export default function Home({params}: Props) {
                         <div className={styles.imageContainer_6}>
                             <Image 
                                 priority
-                                src="/assets/7.png" 
+                                src="/assets/7.webp" 
                                 width={1000} 
                                 height={1000} 
                                 layout="responsive" 
