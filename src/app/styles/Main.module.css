@@ -756,12 +756,11 @@
     }
 
 	.date_container{
-		width: 50%;
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
 		margin-top: 1.8rem;
-		gap: 1rem;
+		gap: 4rem;
 	}
 
 	.day, .hour{
@@ -772,17 +771,15 @@
 		text-transform: uppercase;
 		border-top: 2px solid #ca9a51;
 		border-bottom: 2px solid #ca9a51;
-		width: 180px;
+		width: 100px;
 		/* Ajusta el ancho según sea necesario */
 		text-align: center;
 		/* Centra el texto */
 		height: 60px;
-		/* Ajusta la altura según sea necesario */
-		/* centrar verticalmente */
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		font-size: 2.5rem;
+		font-size: 1.3rem;
 	}
 
 	.date_number, .date_month {

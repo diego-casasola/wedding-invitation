@@ -87,7 +87,7 @@ body {
   color: #ca9a51;
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap; /* Asegura que los elementos no se envuelvan */
+  flex-wrap: nowrap; 
 }
 
 .timer-segment {
@@ -182,21 +182,24 @@ body {
 @media (min-width: 1025px) {
   .timer-wrapper {
     margin-top: 3rem;
+    width: 100%;
+    padding: unset;
   }
 
   .timer-inner {
-    font-size: 2rem;
+    font-size: rem;
   }
 
   .timer-segment {
     margin: 0 2rem;
+
   }
 
   .time {
-    font-size: 4rem;
+    font-size: 2.5rem;
   }
 
   .label {
-    font-size: 2rem;
+    font-size: 1rem;
   }
 }
