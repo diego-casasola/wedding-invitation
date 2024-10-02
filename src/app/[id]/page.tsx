@@ -346,7 +346,7 @@ export default function Home({params}: Props) {
                                         <Image
                                             width={1000}
                                             height={1000}
-                                            src="/assets/qr.webp"
+                                            src="/assets/qr.png"
                                             alt="qr"
                                         />
                                     </Box>

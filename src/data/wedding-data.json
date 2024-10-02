@@ -971,8 +971,8 @@
     },
     {
       "id": "3551485d-8fe8-4334-9cf0-a68d552e3715",
-      "guests": "Katherine Rodriguez",
-      "quantity": 1,
+      "guests": "Sr. Orlando Ribera y Sra. Katherine Rodriguez",
+      "quantity": 2,
       "table": 6,
       "confirmed": false,
       "cel1": "70403976",
@@ -1007,7 +1007,7 @@
     },
     {
       "id": "fab66f7f-cc2f-4018-bad3-ac4b072b4ed5",
-      "guests": "Jacquelin Arancibia",
+      "guests": "Jacqueline Arancibia",
       "quantity": 1,
       "table": 6,
       "confirmed": false,
@@ -1163,7 +1163,7 @@
     },
     {
       "id": "31967a7e-556f-4a6d-bb6c-55127520b04e",
-      "guests": "Nayeli Parra",
+      "guests": "Nayely Parra",
       "quantity": 1,
       "table": 8,
       "cel1": "65367322",
@@ -1210,7 +1210,7 @@
       "confirmed": false
     },
     {
-      "id": "45e5f79-87ac-4a5d-8bba-ebd889d8cc90",
+      "id": "812249a3-87a9-4df6-94a2-2c91560c6909",
       "guests": "Abigail Barroso Casazola",
       "quantity": 1,
       "table": 9,

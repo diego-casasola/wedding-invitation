@@ -24,10 +24,10 @@ export const TimeLine = () => {
 						<TimelineConnector sx={{height: "1rem"}}/>
 					</TimelineSeparator>
 					<TimelineContent sx={{ py: "12px", px: 2 }}>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}} variant="h6" component="span">
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}} variant="h6" component="span">
 							Recepción
 						</Typography>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}}>6:00 pm</Typography>
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}}>6:00 pm</Typography>
 					</TimelineContent>
 				</TimelineItem>
 				<TimelineItem>
@@ -39,10 +39,10 @@ export const TimeLine = () => {
 						<TimelineConnector sx={{height: "1rem"}}/>
 					</TimelineSeparator>
 					<TimelineContent sx={{ py: "12px", px: 2 }}>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}} variant="h6" component="span">
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}} variant="h6" component="span">
 							Ceremonia
 						</Typography>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}}>6:30 pm</Typography>
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}}>6:30 pm</Typography>
 					</TimelineContent>
 				</TimelineItem>
 				<TimelineItem>
@@ -54,10 +54,10 @@ export const TimeLine = () => {
 						<TimelineConnector sx={{height: "1rem"}}/>
 					</TimelineSeparator>
 					<TimelineContent sx={{ py: "12px", px: 2 }}>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}} variant="h6" component="span">
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}} variant="h6" component="span">
 							Brindis
 						</Typography>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}}>8:15 pm</Typography>
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}}>8:15 pm</Typography>
 					</TimelineContent>
 				</TimelineItem>
 				<TimelineItem>
@@ -69,10 +69,10 @@ export const TimeLine = () => {
 						<TimelineConnector sx={{height: "1rem"}}/>
 					</TimelineSeparator>
 					<TimelineContent sx={{ py: "12px", px: 2 }}>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}} variant="h6" component="span">
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}} variant="h6" component="span">
 							Cena
 						</Typography>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}}>8:45 pm</Typography>
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}}>8:45 pm</Typography>
 					</TimelineContent>
 				</TimelineItem>
 				<TimelineItem>
@@ -84,10 +84,10 @@ export const TimeLine = () => {
 						<TimelineConnector sx={{height: "1rem"}}/>
 					</TimelineSeparator>
 					<TimelineContent sx={{ py: "12px", px: 2 }}>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}} variant="h6" component="span">
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}} variant="h6" component="span">
 							Tiempo de Júbilo
 						</Typography>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}}>10:15 pm</Typography>
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}}>10:15 pm</Typography>
 					</TimelineContent>
 				</TimelineItem>
 				<TimelineItem>
@@ -99,10 +99,10 @@ export const TimeLine = () => {
 						<TimelineConnector sx={{height: "1rem"}}/>
 					</TimelineSeparator>
 					<TimelineContent sx={{ py: "12px", px: 2 }}>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}} variant="h6" component="span">
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}} variant="h6" component="span">
 							Torta
 						</Typography>
-						<Typography sx={{fontFamily: "Philosopher-Bold"}}>10:30 pm</Typography>
+						<Typography sx={{fontFamily: "Philosopher-Bold", color: "#fff"}}>10:30 pm</Typography>
 					</TimelineContent>
 				</TimelineItem>
 			</Timeline>

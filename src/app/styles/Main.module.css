@@ -191,6 +191,7 @@
 	font-family: Philosopher-Bold;
 	position: relative;
 	font-size: 1.1rem;
+	color: #fff !important;
 }
 
 .heart {
@@ -404,11 +405,13 @@
 .place_title {
 	font-family: Philosopher-Bold;
 	font-size: 1.5rem;
+	color: #fff !important;
 }
 
 .place_direction {
 	font-family: Philosopher-Regular;
 	font-size: 1.1rem;
+	color: #fff !important;
 }
 
 .place_button {
@@ -474,6 +477,7 @@
 	margin-top: 0.6rem;
 	font-family: Philosopher-Regular;
 	font-size: 1.1rem;
+	color: #fff !important;
 }
 
 .dresscode_info {
@@ -481,6 +485,7 @@
 	text-align: center;
 	font-size: 1.1rem;
 	font-family: Philosopher-Regular;
+	color: #fff !important;
 }
 
 .itinerario_container {
@@ -524,6 +529,7 @@
 	text-align: center;
 	font-family: Philosopher-Regular;
 	font-size: 1.1rem;
+	color: #fff !important;
 }
 
 .thanks {
@@ -531,6 +537,7 @@
 	text-align: center;
 	font-family: Philosopher-Italic;
 	font-size: 1rem;
+	color: #fff !important;
 }
 
 .gift_buttons {
@@ -581,12 +588,14 @@
 
 .first_text {
 	margin-top: 1rem;
+	color: #fff !important;
 }
 
 .quantity_text {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	color: #fff !important;
 }
 
 .quantity {
@@ -601,6 +610,7 @@
 	font-size: 2rem;
 	border-radius: 1rem;
 	font-family: Philosopher-BoldItalic;
+	color: #fff !important;
 }
 
 .no_kids_container {
@@ -624,6 +634,7 @@
 	text-align: center;
 	font-family: Philosopher-Regular;
 	font-size: 1.1rem;
+	color: #fff !important;
 }
 
 .confirmar_asistencia_container {
@@ -647,6 +658,7 @@
 	text-align: center;
 	font-family: Philosopher-Regular;
 	font-size: 1.1rem;
+	color: #fff !important;
 }
 
 .last_container {
@@ -664,6 +676,7 @@
 	text-align: center;
 	font-family: Philosopher-Regular;
 	font-size: 1.1rem;
+	color: #fff !important;
 }
 
 .last_container_esperamos {
@@ -707,6 +720,10 @@
     .place_direction, .gift_text, .thanks, .confirmar_asistencia_text, .last_container_frase {
         font-size: 1rem;
     }
+
+	.gift_text{
+		color: #fff !important;
+	}
 
     .quantity {
         width: 3rem;
@@ -782,6 +799,10 @@
     .place_direction, .gift_text, .thanks, .confirmar_asistencia_text, .last_container_frase {
         font-size: 1.2rem;
     }
+
+	.gift_text{
+		color: #fff !important;
+	}
 
     .quantity {
         width: 4rem;
