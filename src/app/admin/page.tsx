@@ -174,6 +174,19 @@ export default function Admin() {
     };
 
     const handleModalConfirm = async () => {
+        // antes de todo, debe actualizar la lista, para no perder datos que ya hayan registrado desde otro dispositivo
+        const responseData = await fetch('/api', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (responseData.ok) {
+            const data = await responseData.json();
+            setData({ guests: data.guests });
+        } else {
+            console.error('Error updating guest list');
+        }
         if (!selectedGuest && actionType !== 'addGuest') return;
 
         let updatedData;
