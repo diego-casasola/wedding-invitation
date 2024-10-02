@@ -410,6 +410,13 @@ export default function Admin() {
                                     <option value="true">Física</option>
                                     <option value="false">Digital</option>
                                 </select>
+                                <input
+                                    type="number"
+                                    value={editGuestData.table ?? ''}
+                                    onChange={(e) => setEditGuestData({ ...editGuestData, table: Number(e.target.value) })}
+                                    placeholder="Número de mesa"
+                                    className={styles.tableInput}
+                                />
                             </div>
                         )}
                         {actionType === 'addGuest' && (
@@ -450,6 +457,14 @@ export default function Admin() {
                                     placeholder="Número de mesa"
                                     className={styles.tableInput}
                                 />
+                                <select
+                                    value={newGuestData.gender?.toString() ?? ''}
+                                    onChange={(e) => setNewGuestData({ ...newGuestData, gender: Number(e.target.value) })}
+                                    className={styles.tableInput}
+                                >
+                                    <option value="0">Hombre</option>
+                                    <option value="1">Mujer</option>
+                                </select>
                             </div>
                         )}
                         <button onClick={handleModalConfirm}>Sí</button>
