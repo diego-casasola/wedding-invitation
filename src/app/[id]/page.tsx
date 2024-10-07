@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "../../app/styles/Main.module.css";
-import json_wedding_data from "../../data/wedding-data.json";
 import { Clock } from "@/components";
 import MusicPlayer from "@/components/ui/musicPlayer";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -37,11 +36,61 @@ export default function Home({params}: Props) {
 	const [fadeIn, setFadeIn] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const data = json_wedding_data;
+    interface WeddingData {
+        novio: string;
+        novia: string;
+        // Add other properties as needed
+    }
+
+    const [data, setData] = useState<WeddingData | null>(null);
+    interface Guest {
+        guests: string;
+        quantity: number;
+        gender: number;
+    }
+
+    const [guest, setGuest] = useState<Guest | null>(null);
+
+    const getWeddingData = async () => {
+        try{
+            const response = await fetch("http://localhost:3000/api/wedding/detail/1",{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await response.json();
+            setData(data);
+        } catch (error){
+            console.error("Error:", error);
+        }
+    };
+
+    const getGuest = async () => {
+        try{
+            const response = await fetch(`http://localhost:3000/api/wedding/${id}`,{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await response.json();
+            setGuest(data);
+        } catch (error){
+            console.error("Error:", error);
+        }
+    };
 
     const AUDIO_FILE = "/solo-tu-ori.mp3";
 
-    const guest = data.guests.find((guest) => guest.id == id);
+    useEffect(() => {
+        const fetchData = async () => {
+            await getGuest();
+            await getWeddingData();
+        };
+        fetchData();
+    }, []);
+
 
 	useEffect(() => {
         setFadeIn(true);
@@ -93,13 +142,13 @@ export default function Home({params}: Props) {
                         </div>
                         <div className={styles.name_container}>
                             <h2 className={styles.name_novio}>
-                                {data.novio}
+                                Diego André
                             </h2>
                             <h2 className={styles.name_and}>
                                 &
                             </h2>
                             <h2 className={styles.name_novia}>
-                                {data.novia}
+                                María Fernanda
                             </h2>
                         </div>
                         <div className={styles.music_container}>

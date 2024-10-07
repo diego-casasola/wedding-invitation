@@ -141,6 +141,38 @@
     width: 100%;
 }
 
+.actions {
+    position: relative;
+}
+
+.desktopOnly {
+    display: none;
+}
+
+.mobileOnly {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dropdownButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 99999; /* Aumentar el valor de z-index */
+}
+
 @media (max-width: 850px) {
     .tableContainer {
         overflow-x: auto;
@@ -266,6 +298,45 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.modal {
+    /* Estilos para el modal */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    /* Estilos para el contenido del modal */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+}
+
+.tableInput {
+    /* Estilos para los inputs */
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.error {
+    /* Estilos para los mensajes de error */
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
 }
 
 .modalContent button:first-of-type {
@@ -394,4 +465,48 @@
 .deleteButton {
     background-color: red;
     color: white;
+}
+
+/* desktop */
+@media (min-width: 1080px) {
+    .desktopOnly {
+        display: block;
+    }
+    .mobileOnly {
+        display: none;
+    }
+    .tableContainer {
+        width: 90%;
+        margin: auto;
+        height: 100vh; /* Corregir 'hv' a 'vh' */
+        position: relative; /* Asegurar que el contenedor tenga posición relativa */
+    }
+
+    .table th, .table td {
+        padding: 12px 15px;
+        border: unset;
+    }
+
+    .guestName{
+        display: block;
+        max-width: auto;
+        word-wrap: break-word;
+        white-space: normal;
+        text-align: right;
+    }
+
+    .filters{
+        justify-content: center;
+        margin: auto;
+        width: 80%;
+    }
+
+    .actionButton{
+        width: 95px !important;
+        font-size: 0.7rem !important;
+    }
+
+    .buttonContainer{
+        justify-content: center;
+    }
 }

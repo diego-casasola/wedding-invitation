@@ -7,7 +7,7 @@ type Guest = {
     id: string;
     guests: string;
     quantity: number;
-    table: number;
+    table_num: number;
     confirmed: boolean;
     cel1: string;
     cel2: string;
@@ -17,11 +17,89 @@ type Guest = {
 };
 
 export default function Admin() {
-    const [data, setData] = useState<{ guests: Guest[] }>({ guests: (json_wedding_data as any).guests.map((guest: Guest) => ({ ...guest, confirmed: guest.confirmed ?? false })) });
+    const getGuests = async () => {
+        try {
+            const response = await fetch("http://localhost:3000/api/wedding", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                setData({ guests: data });
+            } else {
+                console.error("Unexpected response format:", data);
+            }
+        } catch (error) {
+            console.error("Error fetching guests: ", error);
+        }
+    };
+
+    const updateGuest = async (guestId: string, updatedGuestData: Partial<Guest>) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/wedding/${guestId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedGuestData),
+            });
+            if (response.ok) {
+                await getGuests();
+            } else {
+                console.error("Error updating guest:", await response.text());
+            }
+        } catch (error) {
+            console.error("Error updating guest: ", error);
+        }
+    };
+
+    const addGuest = async (guest: Guest) => {
+        try {
+            const response = await fetch("http://localhost:3000/api/wedding", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(guest),
+            });
+            if (response.ok) {
+                await getGuests();
+            } else {
+                console.error("Error adding guest:", await response.text());
+            }
+        } catch (error) {
+            console.error("Error adding guest: ", error);
+        }
+    };
+
+    const deleteGuest = async (guestId: string) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/wedding/${guestId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (response.ok) {
+                await getGuests();
+            } else {
+                console.error("Error deleting guest:", await response.text());
+            }
+        } catch (error) {
+            console.error("Error deleting guest: ", error);
+        }
+    };
+    const [data, setData] = useState<{ guests: Guest[] }>({ guests: [] });
     const [cantInvitados, setCantInvitados] = useState(0);
     const [cantInvFisica, setCantInvFisica] = useState(0);
     const [cantInvVirtual, setCantInvVirtual] = useState(0);
     const [cantInvConfirmados, setCantInvConfirmados] = useState(0);
+
+    useEffect(() => {
+        getGuests();
+    }, []);
 
     const [filterGuests, setFilterGuests] = useState('');
     const [filterTable, setFilterTable] = useState('');
@@ -36,6 +114,9 @@ export default function Admin() {
     const [newTableNumber, setNewTableNumber] = useState<number | null>(null);
     const [editGuestData, setEditGuestData] = useState<Partial<Guest>>({});
     const [newGuestData, setNewGuestData] = useState<Partial<Guest>>({});
+
+    const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+
 
     useEffect(() => {
         let totalInvitados = 0;
@@ -62,7 +143,7 @@ export default function Admin() {
     useEffect(() => {
         if (filterTable) {
             const invitadosMesa = data.guests.reduce((acc, guest) => {
-                return guest.table.toString() === filterTable ? acc + guest.quantity : acc;
+                return guest.table_num.toString() === filterTable ? acc + guest.quantity : acc;
             }, 0);
             setCantInvitados(invitadosMesa);
         } else {
@@ -77,7 +158,7 @@ export default function Admin() {
     const filteredData = data.guests.filter((guest) => {
         return (
             (filterGuests === '' || guest.guests.toLowerCase().includes(filterGuests.toLowerCase())) &&
-            (filterTable === '' || guest.table.toString() === filterTable) &&
+            (filterTable === '' || guest.table_num.toString() === filterTable) &&
             (filterFisica === '' || guest.fisica.toString() === filterFisica) &&
             (filterDelivered === '' || guest.delivered.toString() === filterDelivered) &&
             (filterConfirmed === '' || guest.confirmed.toString() === filterConfirmed)
@@ -101,6 +182,7 @@ export default function Admin() {
             setModalContent(`¿Está seguro que desea confirmar la asistencia del invitado ${guest.guests}?`);
             setActionType('confirm');
         }
+        setActiveDropdown(null);
         setShowModal(true);
     };
 
@@ -108,12 +190,13 @@ export default function Admin() {
         setSelectedGuest(guest);
         setModalContent(`¿Está seguro que desea marcar como entregado al invitado ${guest.guests}?`);
         setActionType('deliver');
+        setActiveDropdown(null);
         setShowModal(true);
     };
 
     const handleEditTable = (guest: Guest) => {
         setSelectedGuest(guest);
-        setNewTableNumber(guest.table);
+        setNewTableNumber(guest.table_num);
         setModalContent(`Editar número de mesa para ${guest.guests}`);
         setActionType('editTable');
         setShowModal(true);
@@ -126,10 +209,11 @@ export default function Admin() {
             quantity: guest.quantity,
             cel1: guest.cel1,
             fisica: guest.fisica,
-            table: guest.table,
+            table_num: guest.table_num,
         });
         setModalContent(`Editar datos del invitado ${guest.guests}`);
         setActionType('editGuest');
+        setActiveDropdown(null);
         setShowModal(true);
     };
 
@@ -162,6 +246,7 @@ export default function Admin() {
         setSelectedGuest(guest);
         setModalContent(`¿Está seguro que desea eliminar al invitado ${guest.guests}?`);
         setActionType('delete');
+        setActiveDropdown(null);
         setShowModal(true);
     };
 
@@ -172,82 +257,132 @@ export default function Admin() {
         setNewTableNumber(null);
         setEditGuestData({});
         setNewGuestData({});
+        getGuests();
     };
 
     const handleModalConfirm = async () => {
-        // antes de todo, debe actualizar la lista, para no perder datos que ya hayan registrado desde otro dispositivo
-        // const responseData = await fetch('/api', {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // });
-        // if (responseData.ok) {
-        //     const data = await responseData.json();
-        //     setData({ guests: data.guests });
-        // } else {
-        //     console.error('Error updating guest list');
-        // }
         if (!selectedGuest && actionType !== 'addGuest') return;
-
+    
         let updatedData;
-        if (actionType === 'confirm') {
-            updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest!.id ? { ...guest, confirmed: true } : guest
-            );
-        } else if (actionType === 'unconfirm') {
-            updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest!.id ? { ...guest, confirmed: false } : guest
-            );
-        } else if (actionType === 'deliver') {
-            updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest!.id ? { ...guest, delivered: true } : guest
-            );
-        } else if (actionType === 'editTable' && newTableNumber !== null) {
-            updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest!.id ? { ...guest, table: newTableNumber } : guest
-            );
-        } else if (actionType === 'editGuest') {
-            updatedData = data.guests.map((guest) =>
-                guest.id === selectedGuest!.id ? { ...guest, ...editGuestData } : guest
-            );
-        } else if (actionType === 'addGuest') {
-            const newGuest = {
-                ...newGuestData,
-                id: Date.now().toString(), // Generar un ID único
-                confirmed: false,
-                delivered: false,
-                cel2: '',
-            } as Guest;
-            updatedData = [...data.guests, newGuest];
-        } else if (actionType === 'delete') {
-            updatedData = data.guests.filter((guest) => guest.id !== selectedGuest!.id);
-        }
-
-        // Llamada a la API para actualizar el JSON en el servidor
-        const response = await fetch('/api', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ guests: updatedData }),
-        });
-
-        if (response.ok) {
-            if (updatedData) {
-                setData({ guests: updatedData });
+        let response;
+    
+        try {
+            if (actionType === 'confirm') {
+                await updateGuest(selectedGuest!.id, { confirmed: true });
+            } else if (actionType === 'unconfirm') {
+                response = await updateGuest(selectedGuest!.id, { confirmed: false });
+            } else if (actionType === 'deliver') {
+                response = await updateGuest(selectedGuest!.id, { delivered: true });
+            } else if (actionType === 'editTable' && newTableNumber !== null) {
+                response = await updateGuest(selectedGuest!.id, { table_num: newTableNumber });
+            } else if (actionType === 'editGuest') {
+                response = await updateGuest(selectedGuest!.id, editGuestData);
+            } else if (actionType === 'addGuest') {
+                const newGuest = {
+                    ...newGuestData,
+                    confirmed: false,
+                    delivered: false,
+                    cel2: '',
+                } as Guest;
+                response = await addGuest(newGuest);
+            } else if (actionType === 'delete') {
+                response = await deleteGuest(selectedGuest!.id);
             }
-        } else {
-            console.error('Error updating guest list');
+        } catch (error) {
+            console.error('Error updating guest list', error);
         }
-
+    
         handleModalClose();
+    };
+
+    const toggleDropdown = (id: string | null) => {
+        setActiveDropdown(activeDropdown === id ? null : id);
     };
 
     const handleAddGuest = () => {
         setModalContent('Añadir nuevo invitado');
         setActionType('addGuest');
         setShowModal(true);
+    };
+
+    const [isFormValid, setIsFormValid] = useState(false);
+    interface FormErrors {
+        newTableNumber?: string;
+        guests?: string;
+        quantity?: string;
+        cel1?: string;
+        fisica?: string;
+        table_num?: string;
+        gender?: string;
+    }
+
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    useEffect(() => {
+        validateForm();
+    }, [newTableNumber, editGuestData, newGuestData]);
+
+    const validateForm = () => {
+        let errors: FormErrors = {};
+        let isValid = true;
+
+        if (actionType === 'editTable' && !newTableNumber) {
+            isValid = false;
+            errors.newTableNumber = 'El número de mesa es obligatorio';
+        }
+
+        if (actionType === 'editGuest') {
+            if (!editGuestData.guests) {
+                isValid = false;
+                errors.guests = 'El nombre del invitado es obligatorio';
+            }
+            if (!editGuestData.quantity) {
+                isValid = false;
+                errors.quantity = 'La cantidad de pases es obligatoria';
+            }
+            if (!editGuestData.cel1) {
+                isValid = false;
+                errors.cel1 = 'El celular es obligatorio';
+            }
+            if (editGuestData.fisica === undefined) {
+                isValid = false;
+                errors.fisica = 'El tipo de pase es obligatorio';
+            }
+            if (!editGuestData.table_num) {
+                isValid = false;
+                errors.table_num = 'El número de mesa es obligatorio';
+            }
+        }
+
+        if (actionType === 'addGuest') {
+            if (!newGuestData.guests) {
+                isValid = false;
+                errors.guests = 'El nombre del invitado es obligatorio';
+            }
+            if (!newGuestData.quantity) {
+                isValid = false;
+                errors.quantity = 'La cantidad de pases es obligatoria';
+            }
+            if (!newGuestData.cel1) {
+                isValid = false;
+                errors.cel1 = 'El celular es obligatorio';
+            }
+            if (newGuestData.fisica === undefined) {
+                isValid = false;
+                errors.fisica = 'El tipo de pase es obligatorio';
+            }
+            if (!newGuestData.table_num) {
+                isValid = false;
+                errors.table_num = 'El número de mesa es obligatorio';
+            }
+            if (newGuestData.gender === undefined) {
+                isValid = false;
+                errors.gender = 'El género es obligatorio';
+            }
+        }
+
+        setErrors(errors);
+        setIsFormValid(isValid);
     };
 
     return (
@@ -337,44 +472,79 @@ export default function Admin() {
                                 <td data-label="Confirmado">{guest.confirmed ? 'Yes' : 'No'}</td>
                                 <td data-label="Entregada">{guest.delivered ? 'Yes' : 'No'}</td>
                                 <td data-label="Invitación">{guest.fisica ? 'Física' : 'Digital'}</td>
-                                <td data-label="N° Mesa">{guest.table}</td>
+                                <td data-label="N° Mesa">{guest.table_num}</td>
                                 <td data-label="Acciones" className={styles.actions}>
-                                    <button
-                                        className={`${styles.actionButton} ${guest.confirmed ? styles.unconfirmButton : styles.confirmButton}`}
-                                        onClick={() => handleConfirmAttendance(guest)}
-                                    >
-                                        {guest.confirmed ? 'Quitar asistencia' : 'Confirmar asistencia'}
-                                    </button>
-                                    <button
-                                        className={`${styles.actionButton} ${styles.deliverButton}`}
-                                        onClick={() => handleMarkAsDelivered(guest)}
-                                    >
-                                        Marcar como entregado
-                                    </button>
-                                    {/* <button
-                                        className={`${styles.actionButton} ${styles.editButton}`}
-                                        onClick={() => handleEditTable(guest)}
-                                    >
-                                        Editar mesa
-                                    </button> */}
-                                    <button
-                                        className={`${styles.actionButton} ${styles.editGuestButton}`}
-                                        onClick={() => handleEditGuest(guest)}
-                                    >
-                                        Editar
-                                    </button>
-                                    <button
-                                        className={`${styles.actionButton} ${styles.copyLinkButton}`}
-                                        onClick={() => handleCopyLink(guest)}
-                                    >
-                                        Copiar link
-                                    </button>
-                                    <button
-                                        className={`${styles.actionButton} ${styles.deleteButton}`}
-                                        onClick={() => handleDeleteGuest(guest)}
-                                    >
-                                        Eliminar
-                                    </button>
+                                    <div className={styles.desktopOnly}>
+                                        <button className={styles.dropdownButton} onClick={() => toggleDropdown(guest.id)}>
+                                            &#x22EE; {/* Icono de 3 puntos verticales */}
+                                        </button>
+                                        {activeDropdown === guest.id && (
+                                            <div className={styles.dropdownMenu}>
+                                                <button
+                                                    className={`${styles.actionButton} ${guest.confirmed ? styles.unconfirmButton : styles.confirmButton}`}
+                                                    onClick={() => handleConfirmAttendance(guest)}
+                                                >
+                                                    {guest.confirmed ? 'Quitar asistencia' : 'Confirmar asistencia'}
+                                                </button>
+                                                <button
+                                                    className={`${styles.actionButton} ${styles.deliverButton}`}
+                                                    onClick={() => handleMarkAsDelivered(guest)}
+                                                >
+                                                    Marcar como entregado
+                                                </button>
+                                                <button
+                                                    className={`${styles.actionButton} ${styles.editGuestButton}`}
+                                                    onClick={() => handleEditGuest(guest)}
+                                                >
+                                                    Editar
+                                                </button>
+                                                <button
+                                                    className={`${styles.actionButton} ${styles.copyLinkButton}`}
+                                                    onClick={() => handleCopyLink(guest)}
+                                                >
+                                                    Copiar link
+                                                </button>
+                                                <button
+                                                    className={`${styles.actionButton} ${styles.deleteButton}`}
+                                                    onClick={() => handleDeleteGuest(guest)}
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className={styles.mobileOnly}>
+                                        <button
+                                            className={`${styles.actionButton} ${guest.confirmed ? styles.unconfirmButton : styles.confirmButton}`}
+                                            onClick={() => handleConfirmAttendance(guest)}
+                                        >
+                                            {guest.confirmed ? 'Quitar asistencia' : 'Confirmar asistencia'}
+                                        </button>
+                                        <button
+                                            className={`${styles.actionButton} ${styles.deliverButton}`}
+                                            onClick={() => handleMarkAsDelivered(guest)}
+                                        >
+                                            Marcar como entregado
+                                        </button>
+                                        <button
+                                            className={`${styles.actionButton} ${styles.editGuestButton}`}
+                                            onClick={() => handleEditGuest(guest)}
+                                        >
+                                            Editar
+                                        </button>
+                                        <button
+                                            className={`${styles.actionButton} ${styles.copyLinkButton}`}
+                                            onClick={() => handleCopyLink(guest)}
+                                        >
+                                            Copiar link
+                                        </button>
+                                        <button
+                                            className={`${styles.actionButton} ${styles.deleteButton}`}
+                                            onClick={() => handleDeleteGuest(guest)}
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -383,9 +553,10 @@ export default function Admin() {
             </div>
             {showModal && (
                 <div className={styles.modal}>
-                    <div className={styles.modalContent}>
-                        <p>{modalContent}</p>
-                        {actionType === 'editTable' && (
+                <div className={styles.modalContent}>
+                    <p>{modalContent}</p>
+                    {actionType === 'editTable' && (
+                        <div>
                             <input
                                 type="number"
                                 value={newTableNumber ?? ''}
@@ -393,99 +564,114 @@ export default function Admin() {
                                 placeholder="Nuevo número de mesa"
                                 className={styles.tableInput}
                             />
-                        )}
-                        {actionType === 'editGuest' && (
-                            <div>
-                                <input
-                                    type="text"
-                                    value={editGuestData.guests ?? ''}
-                                    onChange={(e) => setEditGuestData({ ...editGuestData, guests: e.target.value })}
-                                    placeholder="Nombre del invitado"
-                                    className={styles.tableInput}
-                                />
-                                <input
-                                    type="number"
-                                    value={editGuestData.quantity ?? ''}
-                                    onChange={(e) => setEditGuestData({ ...editGuestData, quantity: Number(e.target.value) })}
-                                    placeholder="Cantidad de pases"
-                                    className={styles.tableInput}
-                                />
-                                <input
-                                    type="text"
-                                    value={editGuestData.cel1 ?? ''}
-                                    onChange={(e) => setEditGuestData({ ...editGuestData, cel1: e.target.value })}
-                                    placeholder="Celular"
-                                    className={styles.tableInput}
-                                />
-                                <select
-                                    value={editGuestData.fisica?.toString() ?? ''}
-                                    onChange={(e) => setEditGuestData({ ...editGuestData, fisica: e.target.value === 'true' })}
-                                    className={styles.tableInput}
-                                >
-                                    <option value="true">Física</option>
-                                    <option value="false">Digital</option>
-                                </select>
-                                <input
-                                    type="number"
-                                    value={editGuestData.table ?? ''}
-                                    onChange={(e) => setEditGuestData({ ...editGuestData, table: Number(e.target.value) })}
-                                    placeholder="Número de mesa"
-                                    className={styles.tableInput}
-                                />
-                            </div>
-                        )}
-                        {actionType === 'addGuest' && (
-                            <div>
-                                <input
-                                    type="text"
-                                    value={newGuestData.guests ?? ''}
-                                    onChange={(e) => setNewGuestData({ ...newGuestData, guests: e.target.value })}
-                                    placeholder="Nombre del invitado"
-                                    className={styles.tableInput}
-                                />
-                                <input
-                                    type="number"
-                                    value={newGuestData.quantity ?? ''}
-                                    onChange={(e) => setNewGuestData({ ...newGuestData, quantity: Number(e.target.value) })}
-                                    placeholder="Cantidad de pases"
-                                    className={styles.tableInput}
-                                />
-                                <input
-                                    type="text"
-                                    value={newGuestData.cel1 ?? ''}
-                                    onChange={(e) => setNewGuestData({ ...newGuestData, cel1: e.target.value })}
-                                    placeholder="Celular"
-                                    className={styles.tableInput}
-                                />
-                                <select
-                                    value={newGuestData.fisica?.toString() ?? ''}
-                                    onChange={(e) => setNewGuestData({ ...newGuestData, fisica: e.target.value === 'true' })}
-                                    className={styles.tableInput}
-                                >
-                                    <option value="true">Física</option>
-                                    <option value="false">Digital</option>
-                                </select>
-                                <input
-                                    type="number"
-                                    value={newGuestData.table ?? ''}
-                                    onChange={(e) => setNewGuestData({ ...newGuestData, table: Number(e.target.value) })}
-                                    placeholder="Número de mesa"
-                                    className={styles.tableInput}
-                                />
-                                <select
-                                    value={newGuestData.gender?.toString() ?? ''}
-                                    onChange={(e) => setNewGuestData({ ...newGuestData, gender: Number(e.target.value) })}
-                                    className={styles.tableInput}
-                                >
-                                    <option value="0">Hombre</option>
-                                    <option value="1">Mujer</option>
-                                </select>
-                            </div>
-                        )}
-                        <button onClick={handleModalConfirm}>Sí</button>
-                        <button onClick={handleModalClose}>No</button>
-                    </div>
+                            {errors.newTableNumber && <p className={styles.error}>{errors.newTableNumber}</p>}
+                        </div>
+                    )}
+                    {actionType === 'editGuest' && (
+                        <div>
+                            <input
+                                type="text"
+                                value={editGuestData.guests ?? ''}
+                                onChange={(e) => setEditGuestData({ ...editGuestData, guests: e.target.value })}
+                                placeholder="Nombre del invitado"
+                                className={styles.tableInput}
+                            />
+                            {errors.guests && <p className={styles.error}>{errors.guests}</p>}
+                            <input
+                                type="number"
+                                value={editGuestData.quantity ?? ''}
+                                onChange={(e) => setEditGuestData({ ...editGuestData, quantity: Number(e.target.value) })}
+                                placeholder="Cantidad de pases"
+                                className={styles.tableInput}
+                            />
+                            {errors.quantity && <p className={styles.error}>{errors.quantity}</p>}
+                            <input
+                                type="text"
+                                value={editGuestData.cel1 ?? ''}
+                                onChange={(e) => setEditGuestData({ ...editGuestData, cel1: e.target.value })}
+                                placeholder="Celular"
+                                className={styles.tableInput}
+                            />
+                            {errors.cel1 && <p className={styles.error}>{errors.cel1}</p>}
+                            <select
+                                value={editGuestData.fisica?.toString() ?? ''}
+                                onChange={(e) => setEditGuestData({ ...editGuestData, fisica: e.target.value === 'true' })}
+                                className={styles.tableInput}
+                            >
+                                <option value="true">Física</option>
+                                <option value="false">Digital</option>
+                            </select>
+                            {errors.fisica && <p className={styles.error}>{errors.fisica}</p>}
+                            <input
+                                type="number"
+                                value={editGuestData.table_num ?? ''}
+                                onChange={(e) => setEditGuestData({ ...editGuestData, table_num: Number(e.target.value) })}
+                                placeholder="Número de mesa"
+                                className={styles.tableInput}
+                            />
+                            {errors.table_num && <p className={styles.error}>{errors.table_num}</p>}
+                        </div>
+                    )}
+                    {actionType === 'addGuest' && (
+                        <div>
+                            <input
+                                type="text"
+                                value={newGuestData.guests ?? ''}
+                                onChange={(e) => setNewGuestData({ ...newGuestData, guests: e.target.value })}
+                                placeholder="Nombre del invitado"
+                                className={styles.tableInput}
+                            />
+                            {errors.guests && <p className={styles.error}>{errors.guests}</p>}
+                            <input
+                                type="number"
+                                value={newGuestData.quantity ?? ''}
+                                onChange={(e) => setNewGuestData({ ...newGuestData, quantity: Number(e.target.value) })}
+                                placeholder="Cantidad de pases"
+                                className={styles.tableInput}
+                            />
+                            {errors.quantity && <p className={styles.error}>{errors.quantity}</p>}
+                            <input
+                                type="text"
+                                value={newGuestData.cel1 ?? ''}
+                                onChange={(e) => setNewGuestData({ ...newGuestData, cel1: e.target.value })}
+                                placeholder="Celular"
+                                className={styles.tableInput}
+                            />
+                            {errors.cel1 && <p className={styles.error}>{errors.cel1}</p>}
+                            <select
+                                value={newGuestData.fisica?.toString() ?? ''}
+                                onChange={(e) => setNewGuestData({ ...newGuestData, fisica: e.target.value === 'true' })}
+                                className={styles.tableInput}
+                            >
+                                <option disabled value="">Tipo de invitación</option>
+                                <option value="true">Física</option>
+                                <option value="false">Digital</option>
+                            </select>
+                            {errors.fisica && <p className={styles.error}>{errors.fisica}</p>}
+                            <input
+                                type="number"
+                                value={newGuestData.table_num ?? ''}
+                                onChange={(e) => setNewGuestData({ ...newGuestData, table_num: Number(e.target.value) })}
+                                placeholder="Número de mesa"
+                                className={styles.tableInput}
+                            />
+                            {errors.table_num && <p className={styles.error}>{errors.table_num}</p>}
+                            <select
+                                value={newGuestData.gender?.toString() ?? ''}
+                                onChange={(e) => setNewGuestData({ ...newGuestData, gender: Number(e.target.value) })}
+                                className={styles.tableInput}
+                            >
+                                <option disabled value="">Género</option>
+                                <option value="0">Hombre</option>
+                                <option value="1">Mujer</option>
+                            </select>
+                            {errors.gender && <p className={styles.error}>{errors.gender}</p>}
+                        </div>
+                    )}
+                    <button onClick={handleModalConfirm} disabled={!isFormValid}>Sí</button>
+                    <button onClick={handleModalClose}>No</button>
                 </div>
+            </div>
             )}
         </div>
     );
