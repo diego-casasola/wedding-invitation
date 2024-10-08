@@ -5,8 +5,8 @@ let conn: any
 if (!conn){
     conn = new Pool({
         user: 'postgres',
-        password: 'root',
-        host: '192.168.0.2',
+        password: 'SDB0livia',
+        host: '172.17.0.1',
         port: 5432,
         database: 'dm'
     });    

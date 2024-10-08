@@ -19,7 +19,7 @@ type Guest = {
 export default function Admin() {
     const getGuests = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/wedding", {
+            const response = await fetch("https://bodadm2024.sd-bo.com/api/wedding", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export default function Admin() {
 
     const updateGuest = async (guestId: string, updatedGuestData: Partial<Guest>) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/wedding/${guestId}`, {
+            const response = await fetch(`https://bodadm2024.sd-bo.com/api/wedding/${guestId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export default function Admin() {
 
     const addGuest = async (guest: Guest) => {
         try {
-            const response = await fetch("http://localhost:3000/api/wedding", {
+            const response = await fetch("https://bodadm2024.sd-bo.com/api/wedding", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export default function Admin() {
 
     const deleteGuest = async (guestId: string) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/wedding/${guestId}`, {
+            const response = await fetch(`https://bodadm2024.sd-bo.com/api/wedding/${guestId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

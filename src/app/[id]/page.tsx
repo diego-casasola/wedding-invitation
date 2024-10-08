@@ -53,7 +53,7 @@ export default function Home({params}: Props) {
 
     const getWeddingData = async () => {
         try{
-            const response = await fetch("http://localhost:3000/api/wedding/detail/1",{
+            const response = await fetch("https://bodadm2024.sd-bo.com/api/wedding/detail/1",{
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export default function Home({params}: Props) {
 
     const getGuest = async () => {
         try{
-            const response = await fetch(`http://localhost:3000/api/wedding/${id}`,{
+            const response = await fetch(`https://bodadm2024.sd-bo.com/api/wedding/${id}`,{
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
