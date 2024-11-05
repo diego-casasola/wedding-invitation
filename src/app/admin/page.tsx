@@ -96,6 +96,7 @@ export default function Admin() {
     const [cantInvFisica, setCantInvFisica] = useState(0);
     const [cantInvVirtual, setCantInvVirtual] = useState(0);
     const [cantInvConfirmados, setCantInvConfirmados] = useState(0);
+    const [cantInvNoConfirmados, setCantInvNoConfirmados] = useState(0);
 
     useEffect(() => {
         getGuests();
@@ -123,6 +124,7 @@ export default function Admin() {
         let cantInvFisica = 0;
         let cantInvVirtual = 0;
         let cantInvConfirmados = 0;
+        let cantInvNoConfirmados = 0;
         data.guests.forEach((guest) => {
             totalInvitados += guest.quantity;
             if (guest.fisica) {
@@ -131,13 +133,16 @@ export default function Admin() {
                 cantInvVirtual += 1;
             }
             if (guest.confirmed) {
-                cantInvConfirmados += 1;
+                cantInvConfirmados += guest.quantity;
+            } else {
+                cantInvNoConfirmados += guest.quantity;
             }
         });
         setCantInvitados(totalInvitados);
         setCantInvFisica(cantInvFisica);
         setCantInvVirtual(cantInvVirtual);
         setCantInvConfirmados(cantInvConfirmados);
+        setCantInvNoConfirmados(cantInvNoConfirmados);
     }, [data]);
 
     useEffect(() => {
@@ -403,6 +408,10 @@ export default function Admin() {
                 <div className={styles['invitado']}>
                     <div className={styles['numero']}>{cantInvConfirmados}</div>
                     <div className={styles['label']}>Invitados Confirmados</div>
+                </div>
+                <div className={styles['invitado']}>
+                    <div className={styles['numero']}>{cantInvNoConfirmados}</div>
+                    <div className={styles['label']}>Invitados No Confirmados</div>
                 </div>
             </div>
             <div className={styles.filters}>
